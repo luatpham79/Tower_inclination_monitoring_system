@@ -1,0 +1,826 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+body {
+  background: #f4f6f9;
+}
+
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+.Box-Station {
+  width: 250px;
+  height: 175%;
+  background: linear-gradient(180deg, #3f9175, #4fa287);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  border-radius: 20px 0 0 20px;
+  padding: 30px 30px 0 0px;
+  color: white;
+}
+
+/* Header system */
+.header-system {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  width: 100%;
+}
+
+.logo-img {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+}
+
+/* Title 2 dòng */
+.system-title {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.system-title span:first-child {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.system-title span:last-child {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+/* Sidebar menu */
+.sidebar {
+  width: 100%;
+  margin-top: 40px;
+}
+
+.sidebar ul {
+  list-style: none;
+  width: 100%;
+}
+
+.sidebar li {
+  display: flex;
+  align-items: center; /* canh giữa theo chiều dọc */
+  justify-content: flex-start; /* căn trái */
+  gap: 12px;
+
+  padding: 14px 16px;
+  padding-left: 40px; /* cách lề trái 20px */
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: 0.25s ease;
+  opacity: 0.9;
+  position: relative;
+}
+
+/* Hover effect */
+.sidebar li:hover {
+  background: rgba(255, 255, 255, 0.15);
+  opacity: 1;
+}
+
+/* Active item */
+.sidebar li.active {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(250px);
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  opacity: 1;
+}
+
+.sidebar li.active::before {
+  content: "";
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  bottom: 0px;
+  width: 5px;
+  background: white;
+}
+.station-icon {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+  margin-right: 15px;
+}
+
+.logout {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+  padding: 14px 16px;
+  padding-left: 65px; /* cách lề trái 20px */
+  margin-top: auto; /* đẩy xuống dưới cùng */
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.logout span {
+  font-size: 15px;
+  font-weight: 600;
+  color: white;
+}
+
+.logout-icon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+.logout:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.Box-Dashboard {
+  flex: 1;
+  padding: 0px;
+  height: 175%;
+  background: #e3eeea;
+  border-radius: 20px 0px 0px 20px;
+  margin-left: -30px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.Box-Dashboard {
+  position: relative;
+  overflow: hidden;
+}
+
+.Box-Dashboard::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("Background/background_dashboard1.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.6; /* chỉnh độ mờ */
+  z-index: 0;
+}
+
+.Box-Dashboard > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ===== Header ===== */
+
+.header-dashboard {
+  height: 80px;
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+.header-dashboard span {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  font-size: 27px;
+  font-weight: 700;
+  color: #1d8160;
+  margin-top: 25px;
+}
+
+/* ===== Section Titles ===== */
+.text-overview-station span,
+.text-xchart-station span,
+.text-ychart-station span {
+  font-size: 20px;
+  font-weight: 600;
+  color: #1f2937;
+  margin-left: 30px;
+}
+
+/* ===== Overview Row ===== */
+
+.box-overview {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px; /* khoảng cách đều */
+  padding: 0 30px;
+}
+
+/* ===== Small Info Cards ===== */
+
+.infomation-station:hover,
+.data-link-station:hover,
+.battery-station:hover,
+.notification-station:hover {
+  transform: translateY(-3px);
+}
+
+.battery-station {
+  height: 120px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.863);
+  border-radius: 14px;
+  border: 3px solid rgba(0, 124, 83, 0.5);
+  box-shadow: 0 6px 18px rgba(19, 105, 84, 0.5);
+  padding: 20px 15px;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Left side */
+.battery-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.battery-title {
+  font-size: 20px;
+  color: #10b981;
+  font-weight: 700;
+}
+
+.battery-percent {
+  font-size: 28px;
+  font-weight: 700;
+  color: #111827;
+}
+
+/* Right side */
+.battery-right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.battery-icon {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  margin-top: -10px;
+}
+
+.battery-voltage {
+  font-size: 18px;
+  color: #10b981;
+  font-weight: 600;
+}
+
+.data-link-station {
+  height: 120px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.863);
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  padding: 18px 7px;
+  border: 3px solid rgba(0, 124, 83, 0.5);
+  box-shadow: 0 6px 18px rgba(19, 105, 84, 0.5);
+
+  display: flex;
+  gap: 5px;
+  align-items: center; /* icon nằm giữa theo chiều dọc */
+}
+
+/* Icon bên trái chiếm toàn chiều cao */
+.data-icon-big {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+}
+
+/* Phần nội dung bên phải */
+.data-icon-sheet {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.data-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #10b981;
+  padding-top: 10px;
+}
+
+.data-open-link {
+  display: flex;
+  align-items: center;
+  margin-top: 17px;
+}
+
+.data-open-link span {
+  font-size: 16px;
+  color: #111827;
+  font-weight: 600;
+  padding: 0 10px;
+}
+
+.data-icon-small {
+  width: 22px;
+  height: 22px;
+  margin-left: 0px;
+}
+
+/* ===== Chart Cards ===== */
+.xchart-station,
+.ychart-station {
+  height: 360px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  padding: 15px;
+  margin: 0 30px 0 30px;
+}
+
+.infomation-station {
+  height: 120px;
+  width: 380px;
+
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(19, 105, 84, 0.5);
+  margin: 0 30px;
+  transition: 0.2s ease;
+
+  background-image: url("Background/background_infomation4.jpg");
+  background-size: 100% 50%; /* scale vừa đúng kích thước div */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.info-icon {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+}
+
+.notification-station {
+  height: 120px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 14px;
+  border: 3px solid rgba(0, 124, 83, 0.5);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  padding: 18px 15px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Dòng trên */
+.notification-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.notification-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #10b981;
+}
+
+.notification-icon {
+  width: 38px;
+  height: 38px;
+  object-fit: contain;
+}
+
+/* Nội dung bên dưới */
+.notification-body {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.notification-empty {
+  font-size: 16px;
+  color: #000000;
+  opacity: 0.8;
+}
+
+.xchart-station,
+.ychart-station {
+  height: 360px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  padding: 15px;
+  margin: 0 30px 0 30px;
+}
+
+canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+#xChart,
+#yChart {
+  cursor: move;
+  touch-action: none;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 2000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  background-color: #fff;
+  margin: 15% auto;
+  padding: 20px;
+  border-radius: 10px;
+  width: 300px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #888;
+}
+
+.input-group {
+  margin-bottom: 15px;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.save-btn {
+  width: 100%;
+  padding: 10px;
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.save-btn:hover {
+  background-color: #1976d2;
+}
+
+.alert-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.alert-item {
+  pointer-events: auto;
+  min-width: 280px;
+  background-color: #ff4d4d;
+  color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  animation: slideInRight 0.3s ease-out forwards;
+}
+
+.alert-item .alert-content {
+  flex-grow: 1;
+}
+
+.alert-item .alert-number {
+  font-weight: bold;
+  font-size: 1.1rem;
+  display: block;
+  padding-right: 30px;
+}
+
+.alert-item .close-btn {
+  background: none;
+  border: none;
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+  font-size: 2.3rem;
+  opacity: 0.7;
+}
+
+.alert-item .close-btn:hover {
+  opacity: 1;
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.alert-item.hide {
+  animation: fadeOut 0.3s ease-in forwards;
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+}
+
+#login,
+#register {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 2.5rem;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 350px;
+  text-align: center;
+  animation: fadeIn 0.5s ease;
+  margin: auto;
+  align-items: center;
+}
+
+h3 {
+  margin-bottom: 1.5rem;
+  color: #333;
+  font-size: 1.5rem;
+}
+
+input[type="password"] {
+  width: 100%;
+  padding: 12px 15px;
+  margin-bottom: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-sizing: border-box; /* Quan trọng để không bị tràn */
+  font-size: 14px;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+input[type="password"]:focus {
+  border-color: #764ba2;
+  box-shadow: 0 0 8px rgba(118, 75, 162, 0.2);
+}
+
+.btn {
+  width: 100%;
+  padding: 12px;
+  background: #764ba2;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background 0.3s ease,
+    transform 0.1s ease;
+}
+
+#authentication_page {
+  display: flex;
+  height: 500px;
+  align-items: center;
+}
+
+button:hover {
+  background: #10b98121;
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+#openPopupBtn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  padding: 10px 15px;
+  font-size: 16px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+#myModal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1000; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgba(0, 0, 0, 0.5); /* Black background with opacity */
+}
+
+#myModal .modal-content {
+  background-color: #fefefe;
+  margin: 10% auto; /* Center the modal */
+  padding: 20px;
+  border: 1px solid #888;
+  border-radius: 8px;
+  width: 50%; /* Could be more or less, depending on screen size */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+#myModal .close-btn {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#myModal .close-btn:hover,
+#myModal .close-btn:focus {
+  color: #000;
+  text-decoration: none;
+}
+
+#myModal .modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+#myModal .input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+#myModal .input-group label {
+  font-weight: bold;
+  color: #333;
+}
+
+#myModal .input-group input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+#myModal .save-btn {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  align-self: flex-end;
+}
+
+#myModal .save-btn:hover {
+  background-color: #45a049;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ===== Alert Box ===== */
+.alert-box {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 620px;
+  background-color: #727c73;
+  border: 2px solid #f44336;
+  border-radius: 12px;
+  box-shadow: 0 12px 30px rgba(244, 67, 54, 0.18);
+  z-index: 10000;
+  display: flex;
+  gap: 12px;
+  padding: 16px 18px;
+  align-items: center; /* chỉnh lại */
+}
+
+.alert-content {
+  flex: 1;
+  display: flex;
+  align-items: center; /* hiển thị ngang */
+  gap: 152px;
+}
+
+.alert-box.hidden {
+  display: none;
+}
+
+.alert-box .alert-icon {
+  font-size: 28px;
+  color: #f44336;
+  margin-right: 12px;
+  flex-shrink: 0;
+}
+
+.alert-box .alert-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.alert-box .alert-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #b71c1c;
+}
+
+.alert-box .alert-text {
+  font-size: 15px;
+  color: #222;
+  line-height: 1.35;
+}
+
+/* nút nằm bên phải, không chồng */
+.alert-close-btn {
+  margin-left: auto;
+  background-color: #f44336;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: 14px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: 0.12s;
+}
+
+.alert-close-btn:hover {
+  background-color: #d32f2f;
+}
+.alert-close-btn:active {
+  transform: scale(0.98);
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}

@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Monitoring Dashboard</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="Box-Station">
+        <!-- Header system -->
+        <div class="header-system">
+          <img src="Icon/logo.png" class="logo-img" />
+          <div class="system-title">
+            <span>Monitor</span>
+            <span>Dashboard</span>
+          </div>
+        </div>
+        <!-- Sidebar -->
+        <div class="sidebar">
+          <ul>
+            <li class="active" onclick="selectStation(1)">
+              <div class="line"></div>
+              <img src="Icon/Icon_Station.png" class="station-icon" />
+              <span>Station 1</span>
+            </li>
+
+            <li onclick="selectStation(2)">
+              <img src="Icon/Icon_Station.png" class="station-icon" />
+              <span>Station 2</span>
+            </li>
+
+            <li onclick="selectStation(3)">
+              <img src="Icon/Icon_Station.png" class="station-icon" />
+              <span>Station 3</span>
+            </li>
+          </ul>
+        </div>
+        <!-- Logout -->
+        <div class="logout">
+          <img src="Icon/icon_logout.png" class="logout-icon" />
+          <span onclick="handleLogout()">Logout</span>
+        </div>
+      </div>
+      <div class="Box-Dashboard">
+        <div class="header-dashboard">
+          <span>Power plant tilt monitoring system</span>
+          <button id="openPopupBtn">
+            <i class="fa-solid fa-gear"></i>
+          </button>
+        </div>
+        <!-- ======================================================== -->
+        <div class="text-overview-station">
+          <span>Overview</span>
+        </div>
+        <!-- ======================================================== -->
+        <div class="box-overview">
+          <!-- ----- INFOMATION ---------- -->
+          <div class="infomation-station"></div>
+          <!-- -------- LINK ---------- -->
+          <div
+            class="data-link-station"
+            onclick="
+              window.location.href =
+                'https://docs.google.com/spreadsheets/d/1NuYuiVTIa1Vk2GmWrN74bLrIm1ZLuCh2tZDZr2vNdS0/edit?gid=0#gid=0'
+            "
+          >
+            <img src="Icon/icon_sheets.png" class="data-icon-big" />
+            <div class="data-icon-sheet">
+              <span class="data-title">Datasheet</span>
+              <div class="data-open-link">
+                <span>Open</span>
+                <img src="Icon/icon_open_link.png" class="data-icon-small" />
+              </div>
+            </div>
+          </div>
+          <!-- ------- BATTERY---------- -->
+          <div class="battery-station">
+            <div class="battery-left">
+              <span class="battery-title">Battery</span>
+              <span class="battery-percent">100%</span>
+            </div>
+
+            <div class="battery-right">
+              <img src="Icon/icon_battery.png" class="battery-icon" />
+              <span class="battery-voltage">4.2v</span>
+            </div>
+          </div>
+          <!-- ------- Notification --------- -->
+          <div class="notification-station">
+            <div class="notification-top">
+              <span class="notification-title">Notification</span>
+              <img src="Icon/icon_notification.png" class="notification-icon" />
+            </div>
+
+            <div class="notification-body">
+              <span class="notification-empty">Empty</span>
+            </div>
+          </div>
+        </div>
+        <!-- ===================== Biểu đồ X========================= -->
+        <div class="text-xchart-station">
+          <span>X-Axis</span>
+        </div>
+        <div class="xchart-station">
+          <canvas id="xChart"></canvas>
+        </div>
+        <!-- ===================== Biểu đồ Y========================= -->
+        <div class="text-ychart-station">
+          <span>Y-Axis</span>
+        </div>
+        <div class="ychart-station">
+          <canvas id="yChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div id="myModal" class="modal">
+      <div class="modal-content">
+        <span class="close-btn">&times;</span>
+        <h3>Cài đặt thông số</h3>
+        <div class="modal-body">
+          <div class="input-group">
+            <label>Reset password:</label>
+            <input type="password" id="input2" placeholder="Enter value..." />
+          </div>
+          <div class="input-group">
+            <label>X-axis settings:</label>
+            <div>
+              <span>Original value</span>
+              <input
+                type="number"
+                id="input_origin_x"
+                placeholder="Enter value..."
+              />
+            </div>
+          </div>
+          <div class="input-group">
+            <label>Y-axis settings:</label>
+            <div>
+              <span>Original value</span>
+              <input
+                type="number"
+                id="input_origin_y"
+                placeholder="Enter value..."
+              />
+            </div>
+          </div>
+          <!-- Thêm ô nhập chung cho giá trị chiều cao -->
+          <div class="input-group">
+            <label>Height value (m):</label>
+            <input
+              type="number"
+              id="input_height"
+              placeholder="Enter value..."
+            />
+          </div>
+          </div>
+          <button id="saveBtn" class="save-btn">Save Changes</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Alert Cảnh báo -->
+    <div id="alertBox" class="alert-box hidden">
+      <div class="alert-content">
+        <i class="fa-solid fa-triangle-exclamation alert-icon"></i>
+        <div class="alert-text">
+          <span id="alertMessage">Cảnh báo! Giá trị vượt ngưỡng.</span>
+        </div>
+        <button id="alertCloseBtn" class="alert-close-btn">Xác nhận</button>
+      </div>
+    </div>
+
+    <div id="alertContainer" class="alert-container"></div>
+    
+    <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+    </script>
+    <script type="text/javascript">
+      (function(){
+          emailjs.init({
+            //publicKey: "JS00ZDsmI6lp9lQlE",
+            publicKey: "Y-28tOu3EENTuwuSG",
+          });
+      })();
+    </script>
+    <script src="https://smtpjs.com/v3/smtp.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/hammerjs@2.0.8/hammer.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@2.0.1/dist/chartjs-plugin-zoom.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+    <script src="Dashboard.js"></script>
+  </body>
+</html>
